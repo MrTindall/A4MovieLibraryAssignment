@@ -15,20 +15,34 @@ public class MainService : IMainService
         IFileManager _fileManager = new FileManager();
         string filePath = "movies.csv";
 
-        Console.WriteLine("Choose an option:");
-        Console.WriteLine("1. Read from File");
-        Console.WriteLine("2. Write to File");
-        Console.WriteLine("3. Quit");
-        var choice = Console.ReadLine();
+        while (true)
+        {
+            Console.WriteLine("Choose an option:");
+            Console.WriteLine("1. Read from File");
+            Console.WriteLine("2. Write to File");
+            Console.WriteLine("3. Quit");
+            var choice = Console.ReadLine();
 
-        if (choice == "1")
-        {
-            _fileManager.ReadFile(filePath);
+
+
+            if (choice == "1")
+            {
+                _fileManager.ReadFile(filePath);
+            }
+            else if (choice == "2")
+            {
+                _fileManager.WriteFile(filePath);
+            }
+            else if (choice == "3")
+            {
+                break;
+            }
+            else
+            {
+                Console.WriteLine("That is not an input");
+            }
         }
-        else if (choice == "2")
-        {
-            _fileManager.WriteFile(filePath);
-        }
+        
 
     }
 }
