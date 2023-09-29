@@ -6,6 +6,8 @@ namespace ApplicationTemplate.Services;
 
 public class FileManager : IFileManager
 {
+    //================================ ReadFile ===================================
+
     public void ReadFile(string path)
     {
         StreamReader sr = new StreamReader(path);
@@ -41,22 +43,40 @@ public class FileManager : IFileManager
 
     sr.Close();
     }
-
+    //================================ WriteFile ===================================
     public void WriteFile(string path)
     {
         int genreCount;
         bool isValidInput = false;
         string[] genreArray = new string[100];
 
-        var movieID = GetLastMovieId(path) + 1; 
+        var movieID = GetLastMovieId(path) + 1;
+        string title;
+        string titleCheck
 
-        Console.WriteLine("Enter Title");
-        var title = Console.ReadLine();
+        while (true)
+        {
+            Console.WriteLine("Enter Title");
+            titleCheck = Console.ReadLine();
+            
+            string titleCheckResult = GetMovieTitle(path, titleCheck);
+            if (titleCheckResult == "Title already exists")
+            {
+                Console.WriteLine("Title Already Exists");
+            }
+            else if ((titleCheckResult == "OK"))
+            {
+                title = titleCheck;
+                break;
+            }
+        }
+
 
         while (true)
         {
             do
             {
+                Console.WriteLine(title);
                 Console.Write("How many Genres is this movie? ");
                 string input = Console.ReadLine();
 
@@ -85,12 +105,14 @@ public class FileManager : IFileManager
             sw.WriteLine($"{movieID},{title},{genreString}");
         }
     }
+    //================================ GetLastMovieId ===================================
 
     public int GetLastMovieId(string path)
     {
         if (!File.Exists(path))
         {
-            return 0; 
+            Console.WriteLine("Error connecting to file path");
+            return false; 
         }
 
         var lines = File.ReadLines(path);
@@ -104,6 +126,32 @@ public class FileManager : IFileManager
             }
         }
 
-        return 0; 
+        return false; 
+    }
+
+    //================================ GetMovieTitle ===================================
+
+    public string GetMovieTitle(string path, string title)
+    {
+        if (!File.Exists(path))
+        {
+            return false; 
+        }
+
+        var lines = File.ReadLines(path);
+        foreach (var line in lines)
+        {
+            var parts = line.Split(',');
+            if (parts.Length >= 2)
+            {
+                var existingTitle = parts[1].Trim();
+                if (existingTitle.Equals(title, StringComparison.OrdinalIgnoreCase))
+                {
+                    return "Title Already Exists";
+                }
+            }
+        }
+
+        return "OK";
     }
 }
