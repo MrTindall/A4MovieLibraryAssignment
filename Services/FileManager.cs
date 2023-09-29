@@ -52,7 +52,7 @@ public class FileManager : IFileManager
 
         var movieID = GetLastMovieId(path) + 1;
         string title;
-        string titleCheck
+        string titleCheck;
 
         while (true)
         {
