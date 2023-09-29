@@ -112,7 +112,7 @@ public class FileManager : IFileManager
         if (!File.Exists(path))
         {
             Console.WriteLine("Error connecting to file path");
-            return false; 
+            return 0; 
         }
 
         var lines = File.ReadLines(path);
@@ -126,7 +126,7 @@ public class FileManager : IFileManager
             }
         }
 
-        return false; 
+        return 0; 
     }
 
     //================================ GetMovieTitle ===================================
@@ -135,7 +135,7 @@ public class FileManager : IFileManager
     {
         if (!File.Exists(path))
         {
-            return false; 
+            return "File does not exist"; 
         }
 
         var lines = File.ReadLines(path);
