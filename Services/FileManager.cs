@@ -62,13 +62,14 @@ public class FileManager : IFileManager
             string titleCheckResult = GetMovieTitle(path, titleCheck);
             if (titleCheckResult == "Title already exists")
             {
-                Console.WriteLine("Title Already Exists");
+                continue;
             }
             else if ((titleCheckResult == "OK"))
             {
                 title = titleCheck;
                 break;
             }
+            
         }
 
 
